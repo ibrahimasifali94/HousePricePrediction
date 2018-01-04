@@ -31,9 +31,27 @@ from sklearn.feature_selection import SelectKBest
 from sklearn.feature_selection import f_regression
 from sklearn.feature_selection import GenericUnivariateSelect
 #%%
-FeatSelect = SelectKBest(f_regression, k=17)
+FeatSelect = SelectKBest(f_regression, k=16)
 #%%
 FeatSelect.fit(X,y)
 #%%
 
+KBestFeat = FeatSelect.get_support()
 
+# Eliminates the ID, Condition (probably captured by years since renovation) and the longitude (maybe the latitudinal difference affects the amount of sun that reaches the house)
+#%%
+
+#Lets check the f-stat of latitude and longitude
+
+FLong = FeatSelect.scores_[16]
+FLat = FeatSelect.scores_[15]
+
+# There is a significant difference between the F-stat for the latitude (2248) and longitude (10). This justifies removing longitude and not latitude.
+#%%
+
+# Now for the feature called "condition". We can compare it with the column that represents years since last renovation since it is reasonable to assume that the two would be strongly correlated.
+Fcondition = FeatSelect.scores_[8]
+FYearsRenov = FeatSelect.scores_[14]
+
+# The F stat values are not decisively different (28 for condition and 61 for years since last renovation) so at this stage we should not really favor one.
+#%%
