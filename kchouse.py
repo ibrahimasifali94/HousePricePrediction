@@ -55,3 +55,16 @@ FYearsRenov = FeatSelect.scores_[14]
 
 # The F stat values are not decisively different (28 for condition and 61 for years since last renovation) so at this stage we should not really favor one.
 #%%
+# A few visualizations
+# Let's start with a few univariate plots
+# Histograms
+hpfeatset = dataset.drop(["date","price"],1) # Removing date and price from the original data frame
+for i in range(0,21613): # Replacing year of renovation with years since renovation
+    if hpfeatset.loc[i,"yr_renovated"] == 0:
+        hpfeatset.loc[i,"yr_renovated"] = 2017 - hpfeatset.loc[i,"yr_built"]
+    else:
+        hpfeatset.loc[i,"yr_renovated"] = 2017 - hpfeatset.loc[i,"yr_renovated"]
+hpfeatset = hpfeatset.rename(index=str, columns={"yr_renovated":"yrs_renov"}) # Renaming yr_renovated
+hpfeatset.hist(color='blue', alpha=0.5, bins=10) # Plotting the histograms
+plt.show()
+#%%
