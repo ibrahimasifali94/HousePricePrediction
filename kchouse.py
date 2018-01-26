@@ -73,7 +73,7 @@ plt.show()
 # sense of the distribution.
 hpfeatset.plot(kind='density', subplots=True, layout=(4,5), sharex=False)
 # Including these features does not add any value to the model. Also all features besides grade are non-normal
-# If we intend to use linear regression we will need to normalize these features. So proceeding with eliminating all features with no variation.
+# If we intend to use linear regression we will need to normalize these features. So we can consider eliminating all features with no variation.
 #%%
 correlations = hpfeatset.corr()
 # plot correlation matrix
@@ -82,31 +82,30 @@ ax = fig.add_subplot(111)
 cax = ax.matshow(correlations, vmin=-1, vmax=1)
 fig.colorbar(cax)
 ticks = numpy.arange(0,19,1)
-names = hpfeatset.columns.values()
 ax.set_xticks(ticks)
 ax.set_yticks(ticks)
-ax.set_xticklabels(names)
-ax.set_yticklabels(names)
-
+ax.set_xticklabels(hpfeatset.columns.values)
+ax.set_yticklabels(hpfeatset.columns.values)
 plt.show()
-#%%
-
-#
 #sqft_above and sqft_living have very high correlation 
 #grade and sqft_living have high correlation
 #sqft_above and bathrooms have high correlation 
 #sqft_living and bathrooms have high correlation 
 #sqft_living15 and grade
 #sqft_living15 and sqft_above
-
-
-
+#The correlation for years_renov and condition is not very high and it makes intuitive sense that the price
+# would depend on condition so keeping both.
+#%%
 # Scatterplot Matrix
 import matplotlib.pyplot as plt
 import pandas
 from pandas.tools.plotting import scatter_matrix
 scatter_matrix(hpfeatset)
 plt.show()
-
-
-
+#%%
+FSqftlot = FeatSelect.scores_[4]
+FSqftlot15 = FeatSelect.scores_[18]
+FView = FeatSelect.scores_[7]
+FWaterfront = FeatSelect.scores_[6]
+#The F values are low but not as low as longitude and it does not make intuitive sense to eliminate them. So just eliminating ID and longitude.
+#%%
