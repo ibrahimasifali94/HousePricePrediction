@@ -1,3 +1,11 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Tue Jan 23 19:25:17 2018
+
+@author: ibrahimali
+"""
+
 #Importing the Libraries 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -68,3 +76,38 @@ hpfeatset = hpfeatset.rename(index=str, columns={"yr_renovated":"yrs_renov"}) # 
 hpfeatset.hist(color='blue', alpha=0.5, bins=10) # Plotting the histograms
 plt.show()
 #%%
+correlations = hpfeatset.corr()
+# plot correlation matrix
+fig = plt.figure()
+ax = fig.add_subplot(111)
+cax = ax.matshow(correlations, vmin=-1, vmax=1)
+fig.colorbar(cax)
+ticks = numpy.arange(0,19,1)
+names = hpfeatset.columns.values()
+ax.set_xticks(ticks)
+ax.set_yticks(ticks)
+ax.set_xticklabels(names)
+ax.set_yticklabels(names)
+
+plt.show()
+#%%
+
+#
+#sqft_above and sqft_living have very high correlation 
+#grade and sqft_living have high correlation
+#sqft_above and bathrooms have high correlation 
+#sqft_living and bathrooms have high correlation 
+#sqft_living15 and grade
+#sqft_living15 and sqft_above
+
+
+
+# Scatterplot Matrix
+import matplotlib.pyplot as plt
+import pandas
+from pandas.tools.plotting import scatter_matrix
+scatter_matrix(hpfeatset)
+plt.show()
+
+
+
