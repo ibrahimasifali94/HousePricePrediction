@@ -1,11 +1,3 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""
-Created on Tue Jan 23 19:25:17 2018
-
-@author: ibrahimali
-"""
-
 #Importing the Libraries 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -75,6 +67,13 @@ for i in range(0,21613): # Replacing year of renovation with years since renovat
 hpfeatset = hpfeatset.rename(index=str, columns={"yr_renovated":"yrs_renov"}) # Renaming yr_renovated
 hpfeatset.hist(color='blue', alpha=0.5, bins=10) # Plotting the histograms
 plt.show()
+# The plots show that sqft_lot, sqft_lot15, view and waterfront have almost negligible variation.
+#%%
+# Making a density plot to get a smooth curve instead of the bins in the histogram to get a better
+# sense of the distribution.
+hpfeatset.plot(kind='density', subplots=True, layout=(4,5), sharex=False)
+# Including these features does not add any value to the model. Also all features besides grade are non-normal
+# If we intend to use linear regression we will need to normalize these features. So proceeding with eliminating all features with no variation.
 #%%
 correlations = hpfeatset.corr()
 # plot correlation matrix
