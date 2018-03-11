@@ -8,7 +8,7 @@ import pandas as pd
 dataset = pd.read_csv('kc_house_data.csv')
 
 #%%
-# Separated the labels/prices
+# Separate labels/prices
 y = dataset["price"].get_values()
 #%%
 hprice = dataset.get_values()
